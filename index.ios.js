@@ -14,22 +14,25 @@ import {
 } from 'react-native';
 
 export default class poop extends Component {
+  state = {}
+
   componentDidMount() {
-    NativeModules.Poop.addEvent("dope");
+    NativeModules.Poop.addEvent("dope").then(function(foo) {
+      console.log('got promise result', foo);
+    }).catch((err) => {
+      this.setState({error: err.toString()})
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          { this.state.error ?
+            this.state.error
+          :
+            "Waiting for error..."
+          }
         </Text>
       </View>
     );
