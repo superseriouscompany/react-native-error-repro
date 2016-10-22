@@ -17,9 +17,7 @@ export default class poop extends Component {
   state = {}
 
   componentDidMount() {
-    NativeModules.Poop.addEvent("dope").then(function(foo) {
-      console.log('got promise result', foo);
-    }).catch((err) => {
+    NativeModules.Poop.triggerError("dope").catch((err) => {
       this.setState({error: err.toString()})
     });
   }
